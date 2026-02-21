@@ -23,7 +23,6 @@ std::vector<cd> dft(const std::vector<cd>& x) {
 }
 
 void fft_rec(cd* input, cd* output, int N, int stride) {
-
     if (N == 1) {
         output[0] = input[0];
     }
@@ -39,7 +38,6 @@ void fft_rec(cd* input, cd* output, int N, int stride) {
             output[k + N / 2] = p - q;
         }
     }
-
 }
 
 // n must be a power of 2
@@ -62,13 +60,10 @@ void test_case(const std::string& name,
     const std::vector<cd>& input,
     const std::string& expected) {
     std::cout << name << "\n";
-
     auto a = dft(input);
     auto b = ctfft(input);
-
     print_vec("dft:", a);
     print_vec("ctfft:", b);
-
     std::cout << "Expected: " << expected << "\n\n";
 }
 
