@@ -4,6 +4,7 @@
 #include <numbers>
 #include <iostream>
 #include <string>
+#include "fft_big_test_data.h"
 
 using cd = std::complex<double>;
 constexpr double PI = std::numbers::pi;
@@ -66,6 +67,21 @@ void test_case(const std::string& name,
     std::cout << "Expected: " << expected << "\n\n";
 }
 
+void big_test() {
+    std::cout << "Big test:\n";
+    auto got = ctfft(BIG_INPUT);
+    double max_err = 0.0;
+    for (std::size_t i = 0; i < BIG_EXPECTED.size(); i++) {
+        double err = std::abs(got[i] - BIG_EXPECTED[i]);
+        if (err > max_err) {
+            max_err = err;
+        }
+    }
+    std::cout << "max error ctfft vs MATLAB fft: " << max_err << "\n";
+    double tol = 1e-9;
+    std::cout << (max_err < tol ? "PASS\n\n" : "FAIL\n\n");
+}
+
 int main() {
     test_case(
         "Impulse test:",
@@ -84,6 +100,8 @@ int main() {
         { cd(1,0), cd(0,0), cd(-1,0), cd(0,0) },
         "(0,0), (2,0), (0,0), (2,0)"
     );
+
+    big_test();
 
     return 0;
 }
