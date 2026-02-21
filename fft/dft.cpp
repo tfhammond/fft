@@ -30,7 +30,6 @@ void fft_rec(cd* input, cd* output, int N, int stride) {
         fft_rec(input, output, N / 2, 2 * stride);
         fft_rec(input + stride, output + N / 2, N / 2, 2 * stride);
         for (int k = 0; k < (N / 2); k++) {
-            // need to implement.
             cd p = output[k];
             cd angle = cd(0.0, -2.0 * PI * k / N);
             cd q = std::exp(angle) * output[k + N / 2];
